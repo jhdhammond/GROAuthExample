@@ -12,6 +12,8 @@
 		6539BAF91C90CFF600CA1244 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6539BAF71C90CFF600CA1244 /* Main.storyboard */; };
 		6539BAFB1C90CFF600CA1244 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6539BAFA1C90CFF600CA1244 /* Assets.xcassets */; };
 		6539BAFE1C90CFF600CA1244 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 6539BAFC1C90CFF600CA1244 /* LaunchScreen.storyboard */; };
+		6539BB071C90D31200CA1244 /* OAuthSwift.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6539BB051C90D31200CA1244 /* OAuthSwift.framework */; };
+		6539BB081C90D31200CA1244 /* SWXMLHash.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6539BB061C90D31200CA1244 /* SWXMLHash.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +24,8 @@
 		6539BAFA1C90CFF600CA1244 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		6539BAFD1C90CFF600CA1244 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		6539BAFF1C90CFF600CA1244 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		6539BB051C90D31200CA1244 /* OAuthSwift.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OAuthSwift.framework; path = Carthage/Build/iOS/OAuthSwift.framework; sourceTree = "<group>"; };
+		6539BB061C90D31200CA1244 /* SWXMLHash.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SWXMLHash.framework; path = Carthage/Build/iOS/SWXMLHash.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +33,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6539BB071C90D31200CA1244 /* OAuthSwift.framework in Frameworks */,
+				6539BB081C90D31200CA1244 /* SWXMLHash.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +44,8 @@
 		6539BAE71C90CFF500CA1244 = {
 			isa = PBXGroup;
 			children = (
+				6539BB051C90D31200CA1244 /* OAuthSwift.framework */,
+				6539BB061C90D31200CA1244 /* SWXMLHash.framework */,
 				6539BAF21C90CFF600CA1244 /* GROAuthExample */,
 				6539BAF11C90CFF600CA1244 /* Products */,
 			);
@@ -74,6 +82,7 @@
 				6539BAEC1C90CFF600CA1244 /* Sources */,
 				6539BAED1C90CFF600CA1244 /* Frameworks */,
 				6539BAEE1C90CFF600CA1244 /* Resources */,
+				6539BB091C90D33D00CA1244 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -96,6 +105,7 @@
 				TargetAttributes = {
 					6539BAEF1C90CFF600CA1244 = {
 						CreatedOnToolsVersion = 7.2.1;
+						DevelopmentTeam = FAEW2663FW;
 					};
 				};
 			};
@@ -129,6 +139,24 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		6539BB091C90D33D00CA1244 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/Carthage/Build/iOS/OAuthSwift.framework",
+				"$(SRCROOT)/Carthage/Build/iOS/SWXMLHash.framework",
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "/usr/local/bin/carthage copy-frameworks";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		6539BAEC1C90CFF600CA1244 /* Sources */ = {
@@ -247,10 +275,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = GROAuthExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.leio.GROAuthExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Debug;
 		};
@@ -258,10 +294,18 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/Carthage/Build/iOS",
+				);
 				INFOPLIST_FILE = GROAuthExample/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = co.leio.GROAuthExample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 			};
 			name = Release;
 		};

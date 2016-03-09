@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="GROAuthExample" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,45 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Consumer Key" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="zVG-Oz-dEw">
+                                <rect key="frame" x="20" y="45" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Consumer Secret" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="tWM-5a-hz1">
+                                <rect key="frame" x="20" y="83" width="560" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pGS-JE-Z59">
+                                <rect key="frame" x="256" y="121" width="88" height="30"/>
+                                <state key="normal" title="Authenticate"/>
+                                <connections>
+                                    <action selector="authenticateButtonTouchUpInside:" destination="BYZ-38-t0r" eventType="touchUpInside" id="KE6-V8-xP1"/>
+                                </connections>
+                            </button>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="zVG-Oz-dEw" firstAttribute="trailing" secondItem="tWM-5a-hz1" secondAttribute="trailing" id="Czd-ni-YvU"/>
+                            <constraint firstItem="tWM-5a-hz1" firstAttribute="top" secondItem="zVG-Oz-dEw" secondAttribute="bottom" constant="8" symbolic="YES" id="HJw-HE-zcv"/>
+                            <constraint firstItem="zVG-Oz-dEw" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="KP5-a5-EiF"/>
+                            <constraint firstItem="zVG-Oz-dEw" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="25" id="WVb-iR-tCV"/>
+                            <constraint firstItem="pGS-JE-Z59" firstAttribute="top" secondItem="tWM-5a-hz1" secondAttribute="bottom" constant="8" symbolic="YES" id="ZcQ-kT-UsK"/>
+                            <constraint firstItem="tWM-5a-hz1" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="bMs-wu-xpL"/>
+                            <constraint firstItem="pGS-JE-Z59" firstAttribute="centerX" secondItem="tWM-5a-hz1" secondAttribute="centerX" id="dhJ-bM-L7y"/>
+                            <constraint firstItem="zVG-Oz-dEw" firstAttribute="leading" secondItem="tWM-5a-hz1" secondAttribute="leading" id="xyh-DL-eDs"/>
+                        </constraints>
                     </view>
+                    <connections>
+                        <outlet property="keyTextField" destination="zVG-Oz-dEw" id="cBd-k3-RB8"/>
+                        <outlet property="secretTextField" destination="tWM-5a-hz1" id="y6i-e8-8jO"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="340" y="418"/>
         </scene>
     </scenes>
 </document>
