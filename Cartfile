@@ -1,2 +1,2 @@
-github "OAuthSwift/OAuthSwift" ~> 0.5.0
+github "OAuthSwift/OAuthSwift" "master"
 github "drmohundro/SWXMLHash" ~> 2.1

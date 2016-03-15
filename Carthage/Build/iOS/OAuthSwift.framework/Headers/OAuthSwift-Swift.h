@@ -131,6 +131,7 @@ SWIFT_CLASS("_TtC10OAuthSwift11OAuth1Swift")
 @property (nonatomic) BOOL allowMissingOauthVerifier;
 - (nonnull instancetype)initWithConsumerKey:(NSString * __nonnull)consumerKey consumerSecret:(NSString * __nonnull)consumerSecret requestTokenUrl:(NSString * __nonnull)requestTokenUrl authorizeUrl:(NSString * __nonnull)authorizeUrl accessTokenUrl:(NSString * __nonnull)accessTokenUrl OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithParameters:(NSDictionary<NSString *, NSString *> * __nonnull)parameters;
+@property (nonatomic, readonly, copy) NSDictionary<NSString *, NSString *> * __nonnull parameters;
 - (void)authorizeWithCallbackURL:(NSURL * __nonnull)callbackURL success:(void (^ __nonnull)(OAuthSwiftCredential * __nonnull, NSURLResponse * __nullable, NSDictionary<NSString *, NSString *> * __nonnull))success failure:(void (^ __nullable)(NSError * __nonnull))failure;
 + (void)handleOpenURL:(NSURL * __nonnull)url;
 @end
@@ -144,6 +145,7 @@ SWIFT_CLASS("_TtC10OAuthSwift11OAuth2Swift")
 - (nonnull instancetype)initWithConsumerKey:(NSString * __nonnull)consumerKey consumerSecret:(NSString * __nonnull)consumerSecret authorizeUrl:(NSString * __nonnull)authorizeUrl accessTokenUrl:(NSString * __nonnull)accessTokenUrl responseType:(NSString * __nonnull)responseType contentType:(NSString * __nonnull)contentType;
 - (nonnull instancetype)initWithConsumerKey:(NSString * __nonnull)consumerKey consumerSecret:(NSString * __nonnull)consumerSecret authorizeUrl:(NSString * __nonnull)authorizeUrl responseType:(NSString * __nonnull)responseType OBJC_DESIGNATED_INITIALIZER;
 - (nullable instancetype)initWithParameters:(NSDictionary<NSString *, NSString *> * __nonnull)parameters;
+@property (nonatomic, readonly, copy) NSDictionary<NSString *, NSString *> * __nonnull parameters;
 - (void)authorizeWithCallbackURL:(NSURL * __nonnull)callbackURL scope:(NSString * __nonnull)scope state:(NSString * __nonnull)state params:(NSDictionary<NSString *, NSString *> * __nonnull)params success:(void (^ __nonnull)(OAuthSwiftCredential * __nonnull, NSURLResponse * __nullable, NSDictionary<NSString *, NSString *> * __nonnull))success failure:(void (^ __nonnull)(NSError * __nonnull))failure;
 + (void)handleOpenURL:(NSURL * __nonnull)url;
 @end
