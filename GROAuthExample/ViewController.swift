@@ -28,9 +28,6 @@ class ViewController: UIViewController {
 
     func authenticate() {
         guard let key = keyTextField.text, secret = secretTextField.text else {
-            let alert = UIAlertController(title: "Fill In Your Developer Key and Secret",
-                message: nil, preferredStyle: .Alert)
-            self.presentViewController(alert, animated: true, completion: nil)
             return
         }
 
@@ -71,8 +68,6 @@ class ViewController: UIViewController {
                     message += "\n\nToken Secret: \n\(oAuth.client.credential.oauth_token_secret)"
                     message += "\n\nUser ID: \n\(userID)"
                     self.showAlert("Success!", message: message)
-                } else {
-                    abort()
                 }
             },
             failure: {
