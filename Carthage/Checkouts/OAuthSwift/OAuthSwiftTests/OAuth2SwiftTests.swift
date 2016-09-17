@@ -9,43 +9,29 @@
 import XCTest
 @testable import OAuthSwift
 
-class OAuth2SwiftTests: XCTestCase {
+class OAuth2SwiftTests: OAuthSwiftServerBaseTest {
 
-    let server = TestServer()
     let callbackURL = "test://callback"
-    
-    override func setUp() {
-        super.setUp()
-        do {
-            try server.start()
-        }catch {
-            XCTFail("Failed to start server")
-        }
-    }
-
-    override func tearDown() {
-        server.stop()
-        super.tearDown()
-    }
-    
 
     func testDataSuccess() {
         objc_sync_enter(server)
-        testSuccess(.Data, response: .Code("code"))
+        let state: String = generateStateWithLength(20) as String
+        testSuccess(.data, response: .code("code", state:state))
         objc_sync_exit(server)
     }
     func testJSON_Code_Success() {
         objc_sync_enter(server)
-        testSuccess(.JSON, response: .Code("code"))
+        let state: String = generateStateWithLength(20) as String
+        testSuccess(.json, response: .code("code", state:state))
         objc_sync_exit(server)
     }
     func testJSON_AccessToken_Success() {
         objc_sync_enter(server)
-        testSuccess(.JSON, response: .AccessToken(server.oauth_token))
+        testSuccess(.json, response: .accessToken(server.oauth_token))
         objc_sync_exit(server)
     }
 
-    func testSuccess(accessReturnType: TestServer.AccessReturnType, response: AccessTokenResponse) {
+    func testSuccess(_ accessReturnType: TestServer.AccessReturnType, response: AccessTokenResponse) {
         let oauth = OAuth2Swift(
             consumerKey: server.valid_key,
             consumerSecret: server.valid_secret,
@@ -63,34 +49,37 @@ class OAuth2SwiftTests: XCTestCase {
         handler.accessTokenResponse = response
         oauth.authorize_url_handler = handler
         
-        let expectation = expectationWithDescription("request should succeed")
-        
-        let state: String = generateStateWithLength(20) as String
-        oauth.authorizeWithCallbackURL(NSURL(string:callbackURL)!, scope: "all", state: state, params: [:],
+        let expectation = self.expectation(description: "request should succeed")
+
+		var state = ""
+		if case .code(_, let extractedState) = response {
+			state = extractedState ?? ""
+		}
+        oauth.authorizeWithCallbackURL(URL(string:callbackURL)!, scope: "all", state: state, params: [:],
             success: { (credential, response, parameters) -> Void in
                 expectation.fulfill()
             }) { (error) -> Void in
                 XCTFail("The failure handler should not be called.\(error)")
         }
 
-        waitForExpectationsWithTimeout(DefaultTimeout, handler: nil)
+        waitForExpectations(timeout: DefaultTimeout, handler: nil)
 
         XCTAssertEqual(oauth.client.credential.oauth_token, server.oauth_token)
     }
     
     func testJSON_Error_Failure() {
         objc_sync_enter(server)
-        testFailure(.JSON, response: .Error("bad", "very bad"))
+        testFailure(.json, response: .error("bad", "very bad"))
         objc_sync_exit(server)
     }
 
     func testJSON_None_Failure() {
         objc_sync_enter(server)
-        testFailure(.JSON, response: .None)
+        testFailure(.json, response: .none)
         objc_sync_exit(server)
     }
     
-    func testFailure(accessReturnType: TestServer.AccessReturnType, response: AccessTokenResponse) {
+    func testFailure(_ accessReturnType: TestServer.AccessReturnType, response: AccessTokenResponse) {
         let oauth = OAuth2Swift(
             consumerKey: server.valid_key,
             consumerSecret: server.valid_secret,
@@ -108,21 +97,21 @@ class OAuth2SwiftTests: XCTestCase {
         handler.accessTokenResponse = response
         oauth.authorize_url_handler = handler
         
-        let expectation = expectationWithDescription("request should failed")
+        let expectation = self.expectation(description: "request should failed")
         
         let state: String = generateStateWithLength(20) as String
-        oauth.authorizeWithCallbackURL(NSURL(string:callbackURL)!, scope: "all", state: state, params: [:],
+        oauth.authorizeWithCallbackURL(URL(string:callbackURL)!, scope: "all", state: state, params: [:],
             success: { (credential, response, parameters) -> Void in
                 XCTFail("The success handler should not be called.")
             }) { (error) -> Void in
                 expectation.fulfill()
         }
         
-        waitForExpectationsWithTimeout(DefaultTimeout, handler: nil)
+        waitForExpectations(timeout: DefaultTimeout, handler: nil)
     }
     
     func testExpire() {
-        let expectation = expectationWithDescription("request should failed")
+        let expectation = self.expectation(description: "request should failed")
         
         
         let oauth = OAuth2Swift(
@@ -132,7 +121,7 @@ class OAuth2SwiftTests: XCTestCase {
             accessTokenUrl: server.accessTokenURLV2,
             responseType: "code"
         )
-        oauth.client.get(server.expireURLV2, parameters: [:],
+        let _ = oauth.client.get(server.expireURLV2, parameters: [:],
             success: {
                 data, response in
                 XCTFail("\(data).")
@@ -140,7 +129,7 @@ class OAuth2SwiftTests: XCTestCase {
                 print(error.code)
                 if error.code == 401 {
                     if let reponseHeaders = error.userInfo["Response-Headers"] as? [String:String],
-                        authenticateHeader = reponseHeaders["WWW-Authenticate"] ?? reponseHeaders["Www-Authenticate"] {
+                        let authenticateHeader = reponseHeaders["WWW-Authenticate"] ?? reponseHeaders["Www-Authenticate"] {
                             print(authenticateHeader)
                             
                             expectation.fulfill()
@@ -159,7 +148,7 @@ class OAuth2SwiftTests: XCTestCase {
         
         
         
-        waitForExpectationsWithTimeout(DefaultTimeout, handler: nil)
+        waitForExpectations(timeout: DefaultTimeout, handler: nil)
     }
     
 

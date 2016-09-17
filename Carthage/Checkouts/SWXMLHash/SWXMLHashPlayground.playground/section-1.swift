@@ -1,5 +1,7 @@
 // Playground - noun: a place where people can play
 
+// swiftlint:disable force_unwrapping
+
 import SWXMLHash
 import Foundation
 
@@ -33,11 +35,11 @@ func enumerate(indexer: XMLIndexer, level: Int) {
         let name = child.element!.name
         print("\(level) \(name)")
 
-        enumerate(child, level: level + 1)
+        enumerate(indexer: child, level: level + 1)
     }
 }
 
-enumerate(xml, level: 0)
+enumerate(indexer: xml, level: 0)
 
 
 // enumerate all child elements (functionally)
@@ -46,3 +48,46 @@ func reduceName(names: String, elem: XMLIndexer) -> String {
 }
 
 xml.children.reduce("elements: ", combine: reduceName)
+
+
+// custom types conversion
+let booksXML = "<root>" +
+"  <books>" +
+"    <book>" +
+"      <title>Book A</title>" +
+"      <price>12.5</price>" +
+"      <year>2015</year>" +
+"    </book>" +
+"    <book>" +
+"      <title>Book B</title>" +
+"      <price>10</price>" +
+"      <year>1988</year>" +
+"    </book>" +
+"    <book>" +
+"      <title>Book C</title>" +
+"      <price>8.33</price>" +
+"      <year>1990</year>" +
+"      <amount>10</amount>" +
+"    </book>" +
+"  <books>" +
+"</root>"
+
+struct Book: XMLIndexerDeserializable {
+    let title: String
+    let price: Double
+    let year: Int
+    let amount: Int?
+
+    static func deserialize(_ node: XMLIndexer) throws -> Book {
+        return try Book(
+            title: node["title"].value(),
+            price: node["price"].value(),
+            year: node["year"].value(),
+            amount: node["amount"].value()
+        )
+    }
+}
+
+xml = SWXMLHash.parse(booksXML)
+
+let books: [Book] = try xml["root"]["books"]["book"].value()

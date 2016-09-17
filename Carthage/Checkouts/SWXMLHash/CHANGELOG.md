@@ -1,3 +1,60 @@
+## v3.0.2 (September 13, 2016)
+
+* Correct the CocoaPod support so that it still allows for iOS 8 and OSX 10.9.
+
+## v3.0.0 - 3.0.1 (September 13, 2016)
+
+* Official support for Xcode 8.0 and Swift 3.0
+  * See corresponding [PR #78](https://github.com/drmohundro/SWXMLHash/pull/78)
+* `XMLIndexer.Error` was renamed to `IndexingError` because of a naming conflict with the built-in `Error` type.
+* Linux support is partially available and there is a Travis CI build for it as well.
+  * Currently failing functionality is because of https://bugs.swift.org/browse/SR-2301.
+* (3.0.1 because I was having trouble publishing the CocoaPod...)
+
+## v2.5.1 (August 23, 2016)
+
+* Support Swift 2.3 on Xcode 8
+  * See corresponding [PR #95](https://github.com/drmohundro/SWXMLHash/pull/95)
+
+## v2.5.0 (August 8, 2016)
+
+* Added attribute deserialization support (via `value(ofAttribute:)`).
+  * See corresponding [issue #74](https://github.com/drmohundro/SWXMLHash/issues/74) and [PR #89](https://github.com/drmohundro/SWXMLHash/pull/89)
+
+## v2.4.0 (July 12, 2016)
+
+* Changed from using Quick/Nimble to XCTest (no version bump - only testing changes)
+
+## v2.4.0 (July 11, 2016)
+
+* Changed visibility of `children` property on `XMLElement` to be `public`
+  * See [issue #82](https://github.com/drmohundro/SWXMLHash/issues/82) and [PR #83](https://github.com/drmohundro/SWXMLHash/pull/83).
+
+## v2.3.2 (June 23, 2016)
+
+* Fixed issue with lazy loading and serialization support
+  * See [issue #79](https://github.com/drmohundro/SWXMLHash/issues/79).
+
+## v2.3.1 (April 10, 2016)
+
+* Fixed issue with Swift Package Manager
+  * See [PR #72](https://github.com/drmohundro/SWXMLHash/pull/72).
+
+## v2.3.0 (April 9, 2016)
+
+* Added built-in bool support for deserialization.
+  * See corresponding [issue #70](https://github.com/drmohundro/SWXMLHash/issues/70) and [pull request #71](https://github.com/drmohundro/SWXMLHash/pull/71).
+
+## v2.2.0 (March 23, 2016)
+
+* Added deserialization / type transformer support.
+  * See corresponding [issue #10](https://github.com/drmohundro/SWXMLHash/issues/10) and [pull request #68](https://github.com/drmohundro/SWXMLHash/pull/68).
+
+## v2.1.0 (January 27, 2016)
+
+* Changed how text elements are parsed - instead of string concatenation, they're now added as first class `TextElement` instances.
+  * This fixes the problem with mixed text/XML in [issue 33](https://github.com/drmohundro/SWXMLHash/issues/33).
+
 ## v2.0.4 (November 13, 2015)
 
 * Add explicit `watchOS` and `tvOS` targets to the project for better Carthage support
